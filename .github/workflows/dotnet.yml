@@ -17,7 +17,15 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.204' # Ensure this version matches your project's .NET SDK version.
+          dotnet-version: '8.0.204'
+
+      - name: Cache dotnet packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/PlaywrightDemo_4_22_24.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Install necessary libraries
         run: |
@@ -25,9 +33,9 @@ jobs:
           sudo apt-get install -y \
             libwoff1 \
             libopus0 \
-            libwebp7 \          # Updated from libwebp6
+            libwebp7 \
             libwebpdemux2 \
-            libenchant-2-2 \    # Updated from libenchant1c2a
+            libenchant-2-2 \
             libgudev-1.0-0 \
             libsecret-1-0 \
             libhyphen0 \
@@ -37,7 +45,7 @@ jobs:
             libxslt1.1 \
             libevent-2.1-7 \
             libgles2 \
-            libvpx7 \           # Updated from libvpx6
+            libvpx7 \
             libnss3 \
             libxss1 \
             libasound2 \
@@ -45,7 +53,7 @@ jobs:
             libxt6
 
       - name: Build project
-        run: dotnet build
+        run: dotnet build --configuration Release --no-restore
 
       - name: Install Playwright CLI
         run: dotnet tool install --global Microsoft.Playwright.CLI
@@ -54,5 +62,4 @@ jobs:
         run: playwright install
 
       - name: Run tests
-        run: dotnet test
-        
+        run: dotnet test --no-build --verbosity normal
