@@ -17,43 +17,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.204' # Ensure this version matches your project's .NET SDK version
-
-      - name: Install necessary system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwoff1 \
-            libopus0 \
-            libwebp7 \
-            libwebpdemux2 \
-            libenchant-2-2 \
-            libgudev-1.0-0 \
-            libsecret-1-0 \
-            libhyphen0 \
-            libgdk-pixbuf2.0-0 \
-            libegl1 \
-            libnotify4 \
-            libxslt1.1 \
-            libevent-2.1-7 \
-            libgles2 \
-            libvpx7 \
-            libnss3 \
-            libxss1 \
-            libasound2 \
-            libdbus-glib-1-2 \
-            libxt6 \
-            gstreamer1.0-plugins-base \
-            gstreamer1.0-plugins-good \
-            gstreamer1.0-plugins-bad \
-            gstreamer1.0-plugins-ugly \
-            gstreamer1.0-libav \
-            libgstreamer1.0-0 \
-            libgstreamer-plugins-base1.0-0 \
-            libgstreamer-plugins-good1.0-0 \
-            libgstreamer-plugins-bad1.0-0 \
-            libharfbuzz-icu0 \
-            libflite1
+          dotnet-version: '8.0.204' # Match this to your actual .NET SDK version in use
 
       - name: Build project
         run: dotnet build
