@@ -22,6 +22,9 @@ jobs:
       - name: Install necessary system dependencies
         run: |
           sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository universe
+          sudo apt-get update
           sudo apt-get install -y \
             libwoff1 \
             libopus0 \
@@ -43,24 +46,8 @@ jobs:
             libasound2 \
             libdbus-glib-1-2 \
             libxt6 \
-            libwoff2dec1 \
-            libvpx7 \
-            libevent-2.1-7 \
-            libopus0 \
-            libgstallocators-1.0-0 \
-            libgstapp-1.0-0 \
-            libgstpbutils-1.0-0 \
-            libgstaudio-1.0-0 \
-            libgsttag-1.0-0 \
-            libgstvideo-1.0-0 \
-            libgstgl-1.0-0 \
-            libgstcodecparsers-1.0-0 \
-            libgstfft-1.0-0 \
-            libharfbuzz-icu0 \
-            libhyphen0 \
-            libmanette-0.2-0 \
-            libflite1 \
-            libgstreamer-plugins-base1.0-0
+            gstreamer1.0-plugins-base \
+            gstreamer1.0-plugins-good
 
       - name: Build project
         run: dotnet build
