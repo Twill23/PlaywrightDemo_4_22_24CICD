@@ -1,23 +1,30 @@
 using NUnit.Framework;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+
 namespace PlaywrightDemo_4_22_24;
 //this is the correct WAY TI RUN PLAYWRIGHT TEST WITHOUT NUNIT INHERITANCE 
 public class NunitPlaywright : PageTest
 {
     // This method is executed before each test case
     [SetUp]
-    public void Setup()
+    public void Setup() 
     {
+        
+        
     }
 
     [Test, Category("Integration")]
     public async Task SigninServiceNow()
     {
+        Page.SetDefaultTimeout(40000);
       
 
 
-        await Page.GotoAsync("https://developer.servicenow.com/dev.do");  // Navigate to the specified URL
+        await Page.GotoAsync("https://developer.servicenow.com/dev.do", new PageGotoOptions{
+            WaitUntil = WaitUntilState.Load
+        });  // Navigate to the specified URL
+        await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Build apps that solve" })).ToBeVisibleAsync();
 
         await Page.ClickAsync("text=Sign in");  // Click on the element with the text "Sign in"
         // Assuming `Page` is an instance of `IPage` that has been initialized appropriately
@@ -76,6 +83,7 @@ await Page.Locator("xpath=//input[@id='creditCardMonth' and @placeholder='Month'
 await Page.Locator("xpath=//input[@id='creditCardYear' and @value='2017']").FillAsync("2024");
 await Page.Locator("xpath=//input[@id='nameOnCard' and @placeholder='John Smith']").FillAsync("Travis Williams");
 await Page.ClickAsync("xpath=//input[@type='submit' and @value='Purchase Flight']");
+//await Page.PauseAsync();
 //I AM COMMENTING THIS OUT BUT THIS TAKES SCREEMSHOT FTER A STEP
 //await Page.ScreenshotAsync(new PageScreenshotOptions { Path = "Blazedemo.png" });
 
@@ -105,8 +113,11 @@ await Page.ClickAsync("xpath=//input[@type='submit' and @value='Purchase Flight'
     public async Task EAPPTestDemo()
     {
        
-    await Page.GotoAsync("http://www.eaapp.somee.com/");
-    await Page.ClickAsync("text=Login");
+    await Page.GotoAsync("http://www.eaapp.somee.com/", new PageGotoOptions
+    {WaitUntil = WaitUntilState.DOMContentLoaded});
+   // await Page.ClickAsync("text=Login");
+    var lnklgin = Page.Locator("text=Login");
+    await lnklgin.ClickAsync();
     await Page.Locator("xpath=//input[@id='UserName']").FillAsync("adminT");
     await Page.Locator("xpath=//input[@id='Password']").FillAsync("adminT1234567!");
     //I AM COMMENTING THIS OUT BUT THIS TAKES SCREEMSHOT FTER A STEP
@@ -121,20 +132,39 @@ await Page.ClickAsync("xpath=//input[@type='submit' and @value='Purchase Flight'
 
     Assert.Pass();
 
-        await Page.GotoAsync("http://www.eaapp.somee.com/");
-        await Page.ClickAsync("text=Login");
-        await Page.Locator("xpath=//input[@id='UserName']").FillAsync("adminT");
-        await Page.Locator("xpath=//input[@id='Password']").FillAsync("adminT1234567!");
-        //I AM COMMENTING THIS OUT BUT THIS TAKES SCREEMSHOT FTER A STEP
-//await Page.ScreenshotAsync(new PageScreenshotOptions { Path = "Blazedemo.png" });
+    }
 
-        // // Pause here to interact with the browser
-        // Console.WriteLine("Press Enter to continue...");
-        // Console.ReadLine();
-    
+    [Test, Category("Tiffany_Jewlery")]
 
-        // Test code goes here
+    public async Task Tiffany_Jewlery()
+    {
+       
+    await Page.GotoAsync("https://www.tiffany.com/");
+    // ///await Page.GetByLabel("My Account").GetByLabel("animation").ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Register" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Jewelry", Exact = true }).ClickAsync();
+    // //await Page.FrameLocator("iframe[title=\"Sign Up via Text for Offers\"]").GetByTestId("closeIcon").ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Necklaces & Pendants" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Gifts", Exact = true }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Love & Engagement" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Fine Watches" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Home & Accessories" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Fragrance", Exact = true }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Men’s" }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Link, new() { Name = "Men’s", Exact = true }).ClickAsync();
+    // await Page.GetByRole(AriaRole.Navigation).GetByText("Stories", new() { Exact = true }).ClickAsync();
+    //I AM COMMENTING THIS OUT BUT THIS TAKES SCREEMSHOT FTER A STEP
+    //await Page.ScreenshotAsync(new PageScreenshotOptions { Path = "Blazedemo.png" });
 
-        Assert.Pass();
+    // // Pause here to interact with the browser
+    // Console.WriteLine("Press Enter to continue...");
+    // Console.ReadLine();
+
+
+    // Test code goes here
+    //await Page.PauseAsync();
+
+    Assert.Pass();
+
     }
 }
