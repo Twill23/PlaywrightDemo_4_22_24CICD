@@ -18,7 +18,7 @@ public class Tests
         using var playwright = await Playwright.CreateAsync();  // Create a new instance of Playwright
 
         await using var browser = await playwright.Chromium.LaunchAsync( new BrowserTypeLaunchOptions{
-            Headless = false
+            Headless = true,
         });  // Launch a new Chromium browser instance
 
         var page = await browser.NewPageAsync();  // Create a new page in the browser
@@ -89,7 +89,7 @@ public class Tests
         using var playwright = await Playwright.CreateAsync();
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = false
+            Headless = true
         });
 
         var page = await browser.NewPageAsync();
@@ -229,7 +229,7 @@ await page.ClickAsync("xpath=//input[@type='submit' and @value='Purchase Flight'
         using var playwright = await Playwright.CreateAsync();
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = false
+            Headless = true,
         });
 
         var page = await browser.NewPageAsync();
