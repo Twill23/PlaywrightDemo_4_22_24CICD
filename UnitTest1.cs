@@ -388,97 +388,60 @@ public async Task TestNetworkAPIPOMEventDriven()
 }
 
 
-//[Test, Category("flipKartAPI")]
-//public async Task Flipkart()
-//{
-//    using var playwright = await Playwright.CreateAsync();
-//    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-//    {
-//        Headless = true 
-//    });
+// [Test, Category("flipKartAPI")]
+// public async Task Flipkart()
+// {
+//     using var playwright = await Playwright.CreateAsync();
+//     await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+//     {
+//         Headless = false  // Consider toggling this based on environment or debug needs
+//     });
 
-//    var contex = await browser.NewContextAsync();
+//     var contex = await browser.NewContextAsync();
 
-//    var page = await browser.NewPageAsync();
+//     var page = await browser.NewPageAsync();
 
-//    await page.GotoAsync("https://www.flipkart.com/", new PageGotoOptions
-//    {
-//        WaitUntil = WaitUntilState.NetworkIdle,
-//    });
+//     await page.GotoAsync("https://www.flipkart.com/", new PageGotoOptions
+//     {
+//         WaitUntil = WaitUntilState.NetworkIdle,
+//     });
 
-//    //await page.Locator("a", new PageLocatorOptions{HasTextString = "Login"}).ClickAsync();
+//     //await page.Locator("a", new PageLocatorOptions{HasTextString = "Login"}).ClickAsync();
 
-//    //await page.Locator("xpath=//span[contains(text(), 'Login')]").ClickAsync();
-//    //await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
-
-
-
-//    var response = await page.RunAndWaitForRequestAsync(async () =>
-//    {…});
-
-
-
-//    ///await page.PauseAsync();
-/// 
-/// 
-/// 
-/// //    Assert.Pass("Test passed successfully
-//}.");
-[Test, Category("flipKartAPI")]
-public async Task Flipkart()
-{
-    using var playwright = await Playwright.CreateAsync();
-    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-    {
-        Headless = true // Consider toggling this based on environment or debug needs
-    });
-
-    var contex = await browser.NewContextAsync();
-
-    var page = await browser.NewPageAsync();
-
-    await page.GotoAsync("https://www.flipkart.com/", new PageGotoOptions
-    {
-        WaitUntil = WaitUntilState.NetworkIdle,
-    });
-
-    //await page.Locator("a", new PageLocatorOptions{HasTextString = "Login"}).ClickAsync();
-
-    //await page.Locator("xpath=//span[contains(text(), 'Login')]").ClickAsync();
-    //await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
+//     //await page.Locator("xpath=//span[contains(text(), 'Login')]").ClickAsync();
+//     //await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
 
         
 
-    var response = await page.RunAndWaitForRequestAsync(async () =>
-{
-    await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
-}, request =>
-{
-    // Logging the URL and the HTTP method
-    Console.WriteLine($"Request URL: {request.Url}");
-    Console.WriteLine($"HTTP Method: {request.Method}");
+//     var response = await page.RunAndWaitForRequestAsync(async () =>
+// {
+//     await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
+// }, request =>
+// {
+//     // Logging the URL and the HTTP method
+//     Console.WriteLine($"Request URL: {request.Url}");
+//     Console.WriteLine($"HTTP Method: {request.Method}");
 
-    // Check if the URL contains the specific substring and the method is GET
-    bool isUrlMatch = request.Url.Contains("3Dmobiles");
-    bool isMethodGet = request.Method == "GET";
+//     // Check if the URL contains the specific substring and the method is GET
+//     bool isUrlMatch = request.Url.Contains("3Dmobiles");
+//     bool isMethodGet = request.Method == "GET";
 
-    // Optionally log the result of the checks
-    Console.WriteLine($"URL contains '3Dmobiles': {isUrlMatch}");
-    Console.WriteLine($"Method is GET: {isMethodGet}");
+//     // Optionally log the result of the checks
+//     Console.WriteLine($"URL contains '3Dmobiles': {isUrlMatch}");
+//     Console.WriteLine($"Method is GET: {isMethodGet}");
 
-    return isUrlMatch && isMethodGet;
-});
+//     return isUrlMatch && isMethodGet;
+// });
 
    
 
     
-    ///await page.PauseAsync();
+// ///await page.PauseAsync();
 
    
 
-    Assert.Pass("Test passed successfully.");
-}
-
+// Assert.Pass("Test passed successfully.");
+// }
 
 
 }
