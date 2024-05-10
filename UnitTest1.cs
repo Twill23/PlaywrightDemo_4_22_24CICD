@@ -2,13 +2,15 @@ using NUnit.Framework;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 namespace PlaywrightDemo_4_22_24;
+
+using System.Web;
 using PlaywrightDemo_4_22_24;
 
 public class Tests
 {
     // This method is executed before each test case
     [SetUp]
-    public void Setup() 
+    public void Setup()
     {
     }
 
@@ -89,7 +91,7 @@ public class Tests
         using var playwright = await Playwright.CreateAsync();
         await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
-            Headless = true
+            Headless = true,
         });
 
         var page = await browser.NewPageAsync();
@@ -255,7 +257,7 @@ await page.ClickAsync("xpath=//input[@type='submit' and @value='Purchase Flight'
         // Console.ReadLine();
     
 
-         // Test code goes here
+        // Test code goes here
 
         Assert.Pass();
     }
@@ -299,5 +301,184 @@ public async Task EAPPTestDemoWithPOM()
     
     Assert.Pass();
 }
+
+
+
+[Test, Category("EAPPTestDemo2WithPOMEventDriven")]
+public async Task EAPPTestDemo2WithPOMEventDriven()
+{
+    using var playwright = await Playwright.CreateAsync();
+    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+    {
+        Headless = true,
+    });
+
+    var page = await browser.NewPageAsync();
+
+    await page.GotoAsync("http://www.eaapp.somee.com/");
+
+    // Make sure to include the using directive for your page object's namespace
+    EventDrivenEAAPP eventDrivenEAAPP = new EventDrivenEAAPP(page);
+    await eventDrivenEAAPP.ClickEventEAAPP();
+    await eventDrivenEAAPP.LoginEventDrivenEAAPP("adminT2", "adminT1234567!");
+    
+    
+    // Using the page object's method to check for visibility of the Employee List
+    var isExist = await eventDrivenEAAPP.IsEmployeeListExist();
+    Assert.IsTrue(isExist);
+    
+    // Correct way to click on "Log off" using role and name
+    //await page.Locator("role=link[name='Log off']").ClickAsync();
+    await eventDrivenEAAPP.ClickLogOff();
+    
+    // If you want to uncomment this for a screenshot, it should work fine
+    // await page.ScreenshotAsync(new PageScreenshotOptions { Path = "Blazedemo.png" });
+
+    // Console interaction (if needed)
+    // Console.WriteLine("Press Enter to continue...");
+    // Console.ReadLine();
+    
+    Assert.Pass();
+}
+
+
+
+
+[Test, Category("TestNetworkAPIPOMEventDriven")]
+public async Task TestNetworkAPIPOMEventDriven()
+{
+    using var playwright = await Playwright.CreateAsync();
+    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+    {
+        Headless = true  // Consider toggling this based on environment or debug needs
+    });
+
+    var page = await browser.NewPageAsync();
+    await page.GotoAsync("http://www.eaapp.somee.com/");
+
+    EventDrivenEAAPP eventDrivenEAAPP = new EventDrivenEAAPP(page);
+    await eventDrivenEAAPP.ClickEventEAAPP();  // Login
+
+    // Wait for the response of the Employee data after clicking the Employee list
+    var waitResponse = page.WaitForResponseAsync("**/Employee");
+
+    // Click on the Employee List to trigger the request
+    await eventDrivenEAAPP.ClickEmployeeList();
+
+    // Get the response from the awaited task
+    var response = await waitResponse;
+
+    // Print response details to console
+    Console.WriteLine($"Response URL: {response.Url}");
+    Console.WriteLine($"Response Status: {response.Status}");
+    Console.WriteLine($"Response Status Text: {response.StatusText}");
+
+    // Optionally, if you want to read and print the response body
+    var responseBody = await response.BodyAsync();
+    Console.WriteLine($"Response Body: {System.Text.Encoding.UTF8.GetString(responseBody)}");
+
+    // Using the page object's method to check for visibility of the Employee List
+    var isExist = await eventDrivenEAAPP.IsEmployeeListExist();
+    Assert.IsTrue(isExist, "The employee list should be visible but was not.");
+
+    // Further actions if required
+    // await eventDrivenEAAPP.ClickLogOff();
+
+    Assert.Pass("Test passed successfully.");
+}
+
+
+//[Test, Category("flipKartAPI")]
+//public async Task Flipkart()
+//{
+//    using var playwright = await Playwright.CreateAsync();
+//    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+//    {
+//        Headless = true 
+//    });
+
+//    var contex = await browser.NewContextAsync();
+
+//    var page = await browser.NewPageAsync();
+
+//    await page.GotoAsync("https://www.flipkart.com/", new PageGotoOptions
+//    {
+//        WaitUntil = WaitUntilState.NetworkIdle,
+//    });
+
+//    //await page.Locator("a", new PageLocatorOptions{HasTextString = "Login"}).ClickAsync();
+
+//    //await page.Locator("xpath=//span[contains(text(), 'Login')]").ClickAsync();
+//    //await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
+
+
+
+//    var response = await page.RunAndWaitForRequestAsync(async () =>
+//    {…});
+
+
+
+//    ///await page.PauseAsync();
+/// 
+/// 
+/// 
+/// //    Assert.Pass("Test passed successfully
+//}.");
+[Test, Category("flipKartAPI")]
+public async Task Flipkart()
+{
+    using var playwright = await Playwright.CreateAsync();
+    await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+    {
+        Headless = true // Consider toggling this based on environment or debug needs
+    });
+
+    var contex = await browser.NewContextAsync();
+
+    var page = await browser.NewPageAsync();
+
+    await page.GotoAsync("https://www.flipkart.com/", new PageGotoOptions
+    {
+        WaitUntil = WaitUntilState.NetworkIdle,
+    });
+
+    //await page.Locator("a", new PageLocatorOptions{HasTextString = "Login"}).ClickAsync();
+
+    //await page.Locator("xpath=//span[contains(text(), 'Login')]").ClickAsync();
+    //await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
+
+        
+
+    var response = await page.RunAndWaitForRequestAsync(async () =>
+{
+    await page.GetByRole(AriaRole.Link, new() { Name = "Image Image Galaxy F15 5G" }).ClickAsync();
+}, request =>
+{
+    // Logging the URL and the HTTP method
+    Console.WriteLine($"Request URL: {request.Url}");
+    Console.WriteLine($"HTTP Method: {request.Method}");
+
+    // Check if the URL contains the specific substring and the method is GET
+    bool isUrlMatch = request.Url.Contains("3Dmobiles");
+    bool isMethodGet = request.Method == "GET";
+
+    // Optionally log the result of the checks
+    Console.WriteLine($"URL contains '3Dmobiles': {isUrlMatch}");
+    Console.WriteLine($"Method is GET: {isMethodGet}");
+
+    return isUrlMatch && isMethodGet;
+});
+
+   
+
+    
+    ///await page.PauseAsync();
+
+   
+
+    Assert.Pass("Test passed successfully.");
+}
+
+
 
 }
