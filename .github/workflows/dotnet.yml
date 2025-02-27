@@ -2,35 +2,34 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [main, master]  # Trigger workflow on push to main or master branches
+    branches: [main, master]
   pull_request:
-    branches: [main, master]  # Trigger workflow on pull requests targeting main or master
+    branches: [main, master]
 
 jobs:
   test:
-    timeout-minutes: 60  # Set a timeout to prevent infinite runs
-    runs-on: ubuntu-latest  # Run on the latest Ubuntu environment
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4  # Fetch the latest code from the repository
+      - uses: actions/checkout@v4  # Checks out your repository
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v3  # Install .NET SDK
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.204'  # Specify the .NET SDK version
+          dotnet-version: '8.0.204' # Ensures the correct .NET version is installed
 
       - name: Build project
-        run: dotnet build  # Build the .NET project
+        run: dotnet build  # Builds the project before running tests
 
       - name: Install Playwright CLI
-        run: dotnet tool install --global Microsoft.Playwright.CLI  # Install Playwright CLI globally
+        run: dotnet tool install --global Microsoft.Playwright.CLI  # Installs Playwright CLI
 
       - name: Install Playwright Browsers
-        run: playwright install  # Download and install Playwright browsers
+        run: playwright install  # Installs required Playwright browsers
 
-      - name: List available tests  # List all available tests before running them
-        run: dotnet test --list-tests
+      - name: List available tests
+        run: dotnet test --list-tests  # Lists all tests before execution
 
-      - name: Run tests
-        run: dotnet test  # Execute all tests in the project
+      - name: Run tests with detailed logging
+        run: dotnet test --logger "console;verbosity=detailed"  # Runs tests with detailed output
