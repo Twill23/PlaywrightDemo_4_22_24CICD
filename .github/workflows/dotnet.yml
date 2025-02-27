@@ -1,32 +1,36 @@
-name: Playwright Tests
+name: Playwright Tests 
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master]  # Trigger workflow on push to main or master branches
   pull_request:
-    branches: [main, master]
+    branches: [main, master]  # Trigger workflow on pull requests targeting main or master
 
 jobs:
   test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
+    timeout-minutes: 60  # Set a timeout to prevent infinite runs
+    runs-on: ubuntu-latest  # Run on the latest Ubuntu environment
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Fetch the latest code from the repository
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v3  # Install .NET SDK
         with:
-          dotnet-version: '8.0.204' # Match this to your actual .NET SDK version in use
+          dotnet-version: '8.0.204'  # Specify the .NET SDK version
 
       - name: Build project
-        run: dotnet build
+        run: dotnet build  # Build the .NET project
 
       - name: Install Playwright CLI
-        run: dotnet tool install --global Microsoft.Playwright.CLI
+        run: dotnet tool install --global Microsoft.Playwright.CLI  # Install Playwright CLI globally
 
       - name: Install Playwright Browsers
-        run: playwright install
+        run: playwright install  # Download and install Playwright browsers
+
+      - name: List available tests  # List all available tests before running them
+        run: dotnet test --list-tests
 
       - name: Run tests
-        run: dotnet test
+        run: dotnet test  # Execute all tests in the project
