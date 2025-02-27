@@ -9,6 +9,7 @@ public class BlazeMeterDemo
      public BlazeMeterDemo(IPage page) => _page = page; //constructor single line expression
 
     private ILocator _fromPort => _page.Locator("select[name='fromPort']");
+    
     private ILocator _toPort => _page.Locator("select[name='toPort']");
     private ILocator _findFlightsButton => _page.Locator("//input[contains(@class, 'btn-primary') and @type='submit']");
     private ILocator _chooseSecondFlightButton => _page.Locator("xpath=(//input[@type='submit' and @value='Choose This Flight'])[2]");
